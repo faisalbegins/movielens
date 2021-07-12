@@ -2,10 +2,14 @@ package edu.miu.movielens.model;
 
 public enum Genre {
     ACTION,
+    ADULT,
     ADVENTURE,
     COMEDY,
-    HORROR,
-    ROMANCE,
+    CRIME,
     DRAMA,
-    THRILLER
+    FANTASY,
+    SCI_FI,
+    HORROR,
+    THRILLER,
+    WAR
 }

@@ -7,7 +7,7 @@ public class Movie {
     private String name;
     private String summery;
     private Writer writer;
-    private Director director;
+    private Person director;
     private List<Actor> actors;
     private List<Genre> genres;
     private Integer duration;
@@ -37,11 +37,11 @@ public class Movie {
         this.writer = writer;
     }
 
-    public Director getDirector() {
+    public Person getDirector() {
         return director;
     }
 
-    public void setDirector(Director director) {
+    public void setDirector(Person director) {
         this.director = director;
     }
 

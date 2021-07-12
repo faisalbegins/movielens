@@ -1,0 +1,55 @@
+Movie Name: Tenet
+Genre: Action, Sci-Fi, Thriller
+Director: Christopher Nolan
+Writer: Christopher Nolan
+Stars: John David Washington, Robert Pattinson, Elizabeth Debicki
+Release Date: 2020
+
+Movie Name: Interstellar
+Genre: Adventure, Sci-Fi, Drama
+Director: Christopher Nolan
+Writer: Christopher Nolan
+Stars: Matthew McConaughey, Anne Hathway, Jessica Chastain
+Release Date: 2014
+
+Movie Name: Bridge of Spies
+Genre: Drama, History, Thriller
+Director: Steven Spielberg
+Writer: Matt Charman
+Stars: Tom Hanks, Mark Rylance, Alan Alda
+Release Date: 2015
+
+Movie Name: Ready Player One
+Genre: Action, Adventure, Sci-Fi
+Director: Steven Spielberg
+Writer: Zak Penn
+Stars: Tye Sheridan, Olivia Cooke, Ben Mendelsohn
+Release Date: 2018
+
+Movie Name: Once Upon a Time... In Hollywood
+Genre: Comedy, Drama
+Director: Quentin Tarantino
+Writer: Quentin Tarantino
+Stars: Leonardo DiCaprio, Brad Pitt, Margot Robbie
+Release Date: 2019
+
+Movie Name: The Hateful Eight
+Genre: Crime, Drama, Mystery
+Director: Quentin Tarantino
+Writer: Quentin Tarantino
+Stars: Samuel L. Jackson, Kurt Russel, Jennifer Jason Leigh
+Release Date: 2019
+
+Movie Name: Once Upon a Time... In Hollywood
+Genre: Comedy, Drama
+Director: Quentin Tarantino
+Writer: Quentin Tarantino
+Stars: Leonardo DiCaprio, Brad Pitt, Margot Robbie
+Release Date: 2019
+
+Movie Name: The Hateful Eight
+Genre: Crime, Drama, Mystery
+Director: Quentin Tarantino
+Writer: Quentin Tarantino
+Stars: Samuel L. Jackson, Kurt Russel, Jennifer Jason Leigh
+Release Date: 2015

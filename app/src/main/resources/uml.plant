@@ -50,13 +50,17 @@ class ViewerRating {
 }
 
 enum Genre {
-  ACTION,
-  ADVENTURE
-  COMEDY,
-  HORROR,
-  ROMANCE
-  DRAMA,
-  THRILLER
+    ACTION,
+    ADULT,
+    ADVENTURE,
+    COMEDY,
+    CRIME,
+    DRAMA,
+    FANTASY,
+    SCI_FI,
+    HORROR,
+    THRILLER,
+    WAR
 }
 
 Movie "*" -- "*" Viewer
