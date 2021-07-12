@@ -1,10 +1,10 @@
 @startuml
-
 class Movie {
   -name: String
-  -summery: String
+  -summary: String
   -actors
   -director
+  -writer
   -genres
   -duration: Integer
   -releaseYear: Integer
@@ -35,7 +35,7 @@ class Director {
 
 }
 
-class Writter {
+class Writer {
 
 }
 
@@ -43,7 +43,7 @@ class Viewer {
 
 }
 
-class ViewerRatting {
+class ViewerRating {
   -reviewerId
   -movieId
   -rating: Double
@@ -60,22 +60,21 @@ enum Genre {
 }
 
 Movie "*" -- "*" Viewer
-(Movie, Viewer) .. ViewerRatting
+(Movie, Viewer) .. ViewerRating
 
 Movie "*" -- "*" Award
 (Movie, Award) .. MovieAward
 
 Movie "*" -- "*" Actor
 Movie "*" -- "1" Director
-Movie "*" -- "1" Writter
+Movie "*" -- "1" Writer
 
 Movie "*" -- "*" Genre
 
 
 Role  ^-- Director
 Role  ^-- Actor
-Role  ^-- Writter
+Role  ^-- Writer
 Role  ^-- Viewer
 Person "1" -- "*" Role
-
 @enduml
