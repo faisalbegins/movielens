@@ -29,7 +29,7 @@ public class ApplicationTest {
             }});
             setDirector(LookupFactory.directors().get(3));
             setActors(new ArrayList<>() {{
-                
+
             }});
         }});
     }

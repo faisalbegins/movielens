@@ -6,9 +6,9 @@ import java.util.List;
 public class Movie {
     private String name;
     private String summery;
-    private Writer writer;
+    private Person writer;
     private Person director;
-    private List<Actor> actors;
+    private List<Person> actors;
     private List<Genre> genres;
     private Integer duration;
     private LocalDate releaseYear;
@@ -29,12 +29,8 @@ public class Movie {
         this.summery = summery;
     }
 
-    public Writer getWriter() {
+    public Person getWriter() {
         return writer;
-    }
-
-    public void setWriter(Writer writer) {
-        this.writer = writer;
     }
 
     public Person getDirector() {
@@ -45,11 +41,15 @@ public class Movie {
         this.director = director;
     }
 
-    public List<Actor> getActors() {
+    public void setWriter(Person writer) {
+        this.writer = writer;
+    }
+
+    public List<Person> getActors() {
         return actors;
     }
 
-    public void setActors(List<Actor> actors) {
+    public void setActors(List<Person> actors) {
         this.actors = actors;
     }
 
