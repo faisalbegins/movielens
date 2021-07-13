@@ -26,5 +26,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("edu.miu.movielens.App")
+    mainClass.set("edu.miu.movielens.Application")
 }

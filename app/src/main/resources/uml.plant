@@ -1,16 +1,12 @@
 @startuml
 class Movie {
   -name: String
-  -summary: String
-  -actors
-  -director
-  -writer
-  -genres
   -duration: Integer
-  -releaseYear: Integer
+  -releaseYear: LocalDate
+  -imdbScore: Double
 }
 
-class Award {
+Class Award {
   -name: String
 }
 
@@ -18,8 +14,11 @@ class MovieAward {
   -year: Integer
 }
 
+class MovieActor {
+  -leadRole
+}
+
 class Person {
-  -id: Long
   -name: String
 }
 
@@ -39,46 +38,38 @@ class Writer {
 
 }
 
-class Viewer {
-
-}
-
-class ViewerRating {
-  -reviewerId
-  -movieId
-  -rating: Double
-}
-
 enum Genre {
-    ACTION,
-    ADULT,
-    ADVENTURE,
-    COMEDY,
-    CRIME,
-    DRAMA,
-    FANTASY,
-    SCI_FI,
-    HORROR,
-    THRILLER,
-    WAR
+  -name: String
 }
 
-Movie "*" -- "*" Viewer
-(Movie, Viewer) .. ViewerRating
+enum Language {
+}
 
-Movie "*" -- "*" Award
-(Movie, Award) .. MovieAward
+enum Country {
+}
+
+enum ContentRating {
+}
 
 Movie "*" -- "*" Actor
+(Movie, Actor) .. MovieActor
+
+Movie "*" -- "0..*" Award
+(Movie, Award) .. MovieAward
+
+Movie "*" -- "*" Genre
+(Movie, Genre) .. MovieGenre
+
+
 Movie "*" -- "1" Director
 Movie "*" -- "1" Writer
 
-Movie "*" -- "*" Genre
-
+Movie "*" -- "1" Country
+Movie "*" -- "1" Language
+Movie "*" -- "0..*" ContentRating
 
 Role  ^-- Director
 Role  ^-- Actor
 Role  ^-- Writer
-Role  ^-- Viewer
 Person "1" -- "*" Role
 @enduml
