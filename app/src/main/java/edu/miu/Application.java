@@ -1,6 +1,5 @@
-package edu.miu.movielens;
+package edu.miu;
 
-import edu.miu.movielens.model.MovieActor;
 import edu.miu.utils.DataLoader;
 
 public class Application {
