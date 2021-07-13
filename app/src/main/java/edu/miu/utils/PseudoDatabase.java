@@ -19,6 +19,7 @@ public class PseudoDatabase {
     private final List<Award> awards = new ArrayList<>();;
     private final List<MovieAward> movieAwards = new ArrayList<>();;
     private final List<MovieActor> movieActors = new ArrayList<>();;
+    private final List<MovieGenre> movieGenres = new ArrayList<>();;
 
     private static final String[] rows;
 
@@ -45,7 +46,6 @@ public class PseudoDatabase {
         initWriter();
         initMovies();
         initMovieAwards();
-        initMovieActors();
     }
 
     private void initAwards() {
@@ -131,9 +131,22 @@ public class PseudoDatabase {
             DateTimeFormatter pattern = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             LocalDate releaseYear = LocalDate.parse(ry, pattern);
 
+            Movie movie = new Movie(movieName, writer, director,
+                                    country, duration, language,
+                                    imdbScore, rating, releaseYear);
+            // populate movie table
+            movies.add(movie);
 
+            // populate movie actor table
+            movieActors.add(new MovieActor(movie, getActorByName(cells[2].trim()), true));
+            movieActors.add(new MovieActor(movie, getActorByName(cells[3].trim()), false));
+            movieActors.add(new MovieActor(movie, getActorByName(cells[4].trim()), false));
 
-            movies.add(new Movie(movieName, writer, director, country, duration, language, imdbScore, rating, releaseYear));
+            // populate movie genre table
+            String[] genres = cells[5].split("\\|");
+            for(String genre : genres) {
+                movieGenres.add(new MovieGenre(movie, Genre.valueOf(genre.toUpperCase())));
+            }
         }
     }
 
@@ -141,8 +154,10 @@ public class PseudoDatabase {
         //TODO: implement
     }
 
-    private void initMovieActors() {
-        //TODO: implement
+    private Person getActorByName(String name) {
+        return actors.stream()
+                .filter(person -> person.name().equals(name))
+                .findFirst().orElseThrow(RuntimeException::new);
     }
 
 
