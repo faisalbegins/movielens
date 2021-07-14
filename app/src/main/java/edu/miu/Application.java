@@ -2,7 +2,6 @@ package edu.miu;
 
 import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.movielens.model.Genre;
-import edu.miu.movielens.model.MovieGenre;
 
 import java.util.List;
 import java.util.Map;
