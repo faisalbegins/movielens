@@ -49,7 +49,7 @@ public class PseudoDatabase {
     }
 
     private void initAwards() {
-        awards.add(new Award("Oscars"));
+        awards.add(new Award("Oscar"));
         awards.add(new Award("Golden Globe"));
     }
 
@@ -147,6 +147,16 @@ public class PseudoDatabase {
             for(String genre : genres) {
                 movieGenres.add(new MovieGenre(movie, Genre.valueOf(genre.toUpperCase())));
             }
+
+            // populate movie awards
+            String[] awards = cells[12].trim().split("\\|");
+            for(String awardStr : awards) {
+                //System.out.println(awardStr);
+                Award award = getAwardByName(awardStr);
+                if(award != null) {
+                    movieAwards.add(new MovieAward(movie, new Award(award.name()), releaseYear));
+                }
+            }
         }
     }
 
@@ -158,6 +168,12 @@ public class PseudoDatabase {
         return actors.stream()
                 .filter(person -> person.name().equals(name))
                 .findFirst().orElseThrow(RuntimeException::new);
+    }
+
+    private Award getAwardByName(String name) {
+        return awards.stream()
+                .filter(award -> award.name().equals(name))
+                .findFirst().orElse(null);
     }
 
 
