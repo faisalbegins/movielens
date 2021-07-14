@@ -16,7 +16,7 @@ public interface FunctionUtils {
     // instantiate database
     PseudoDatabase database = PseudoDatabase.getInstance();
 
-    // Top K popular movies in a given year
+    // Query 1: Top K popular movies in a given year
     BiFunction<Integer, Integer, List<String>> topKMoviesInGivenYear =
             /**
              * @param  k                number of movies we want to show
@@ -30,7 +30,7 @@ public interface FunctionUtils {
                     .map(Movie::name)
                     .collect(Collectors.toList());
 
-    // most successful director in a specific year
+    // Query 2: most successful director in a specific year
     Function<Integer, Optional<String>> mostSuccessfulDirectorInGivenYear =
             (year) -> database.getMovies().stream()
                     .filter(movie -> movie.releaseYear().getYear() == year)
@@ -39,7 +39,7 @@ public interface FunctionUtils {
                     .map(m -> m.director().name())
                     .findFirst();
 
-    // top k movies from each genre in a given year
+    // Query 3: top k movies from each genre in a given year
     BiFunction<Integer, Integer, Map<Genre, List<String>>> topKMoviesByGenreInGivenYear =
             (k, year) -> database.getMovieGenres().stream()
                     .collect(Collectors.groupingBy(MovieGenre::genre))
@@ -49,6 +49,18 @@ public interface FunctionUtils {
                     .entrySet()
                     .stream()
                     .collect(Collectors.toMap(Map.Entry::getKey, e -> FunctionUtils.toMovieNames.apply(e.getValue())));
+
+    // Query 4: top k genre by a given year
+    BiFunction<Integer, Integer, List<String>> topKGenreByYear =
+            (k, year) -> database.getMovieGenres().stream()
+                    .collect(Collectors.groupingBy(e -> e.genre().name(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .limit(k)
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toList());
+
 
     // helper functions
     BiFunction<List<MovieGenre>, Integer, List<MovieGenre>> sortedKMoveGenreByImdbScore =

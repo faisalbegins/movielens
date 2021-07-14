@@ -60,4 +60,11 @@ public class FunctionUtilsTest {
 
         assertEquals(expected.keySet(), result.keySet());
     }
+
+    @Test
+    public void top_k_genre_by_a_given_year() {
+        List<String> expected = Arrays.asList("DRAMA", "COMEDY");
+        List<String> result = FunctionUtils.topKGenreByYear.apply(2, 2016);
+        assertEquals(expected, result);
+    }
 }
