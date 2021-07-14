@@ -45,7 +45,6 @@ public class PseudoDatabase {
         initDirectors();
         initWriter();
         initMovies();
-        initMovieAwards();
     }
 
     private void initAwards() {
@@ -151,17 +150,12 @@ public class PseudoDatabase {
             // populate movie awards
             String[] awards = cells[12].trim().split("\\|");
             for(String awardStr : awards) {
-                //System.out.println(awardStr);
                 Award award = getAwardByName(awardStr);
                 if(award != null) {
                     movieAwards.add(new MovieAward(movie, new Award(award.name()), releaseYear));
                 }
             }
         }
-    }
-
-    private void initMovieAwards() {
-        //TODO: implement
     }
 
     private Person getActorByName(String name) {
@@ -219,5 +213,9 @@ public class PseudoDatabase {
 
     public List<MovieActor> getMovieActors() {
         return movieActors;
+    }
+
+    public List<MovieGenre> getMovieGenres() {
+        return movieGenres;
     }
 }
