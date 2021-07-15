@@ -1,6 +1,7 @@
 package edu.miu.movielens.functions;
 
 import edu.miu.movielens.model.*;
+import edu.miu.utils.HelperFunctions;
 
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public interface FunctionUtils {
                     .collect(Collectors.toMap(Map.Entry::getKey, (entity) -> FunctionUtils.topKMoveGenreByImdbScore.apply(entity.getValue(), k)))
                     .entrySet()
                     .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, e -> FunctionUtils.toMovieNames.apply(e.getValue())));
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> HelperFunctions.toMovieNames.apply(e.getValue())));
 
     // Query 4: top k genre by a given year
     TriFunction<List<MovieGenre>, Integer, Integer, List<String>> topKGenreByYear =
@@ -98,9 +99,16 @@ public interface FunctionUtils {
                     .map(Movie::name)
                     .collect(Collectors.toList());
 
-    Function<List<MovieGenre>, List<String>> toMovieNames =
-            (movieGenres) -> movieGenres.stream()
-                    .map(g -> g.movie().name())
+    // Query 10: top k director based on awards
+    BiFunction<List<MovieAward>, Integer, List<String>> topKDirectorBasedOnAwards =
+            (awards, k) -> awards.stream()
+                    .map(award -> award.movie().director().name())
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .map(Map.Entry::getKey)
+                    .limit(k)
                     .collect(Collectors.toList());
 
 }

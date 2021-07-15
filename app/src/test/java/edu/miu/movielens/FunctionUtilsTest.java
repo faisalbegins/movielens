@@ -1,6 +1,5 @@
 package edu.miu.movielens;
 
-import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.movielens.model.ContentRating;
 import edu.miu.movielens.model.Genre;
 import edu.miu.utils.PseudoDatabase;
@@ -9,8 +8,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static edu.miu.movielens.functions.FunctionUtils.mostSuccessfulDirectorInGivenYear;
-import static edu.miu.movielens.functions.FunctionUtils.topKMoviesInGivenYear;
+import static edu.miu.movielens.functions.FunctionUtils.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -68,7 +66,7 @@ public class FunctionUtilsTest {
         expected.put(Genre.valueOf("CRIME"), Arrays.asList("The Shawshank Redemption"));
         expected.put(Genre.valueOf("DRAMA"), Arrays.asList("The Shawshank Redemption"));
 
-        Map<Genre, List<String>> result = FunctionUtils.topKMoviesByGenreInGivenYear
+        Map<Genre, List<String>> result = topKMoviesByGenreInGivenYear
                 .apply(database.getMovieGenres(), 1, 2016);
 
         assertEquals(expected.keySet(), result.keySet());
@@ -77,7 +75,7 @@ public class FunctionUtilsTest {
     @Test
     public void top_k_genre_by_a_given_year() {
         List<String> expected = Arrays.asList("DRAMA", "COMEDY");
-        List<String> result = FunctionUtils.topKGenreByYear
+        List<String> result = topKGenreByYear
                 .apply(database.getMovieGenres(), 2, 2016);
         assertEquals(expected, result);
     }
@@ -85,7 +83,7 @@ public class FunctionUtilsTest {
     @Test
     public void top_k_actor_appeared_in_leading_role_in_a_given_year() {
         List<String> expected = Arrays.asList("Scarlett Johansson", "Morgan Freeman");
-        List<String> result = FunctionUtils.topKActorAppearedInLeadingRoleInAGivenYear
+        List<String> result = topKActorAppearedInLeadingRoleInAGivenYear
                 .apply(database.getMovieActors(), 2, 2016);
         assertEquals(expected, result);
     }
@@ -93,7 +91,7 @@ public class FunctionUtilsTest {
     @Test
     public void in_a_given_year_how_many_movies_were_released_by_given_content_rating() {
         Long expected = 42L;
-        Long result = FunctionUtils.movieCountContentRatingInAGivenYear
+        Long result = movieCountContentRatingInAGivenYear
                 .apply(database.getMovies(),2016, ContentRating.PG_13);
         assertEquals(expected, result);
     }
@@ -101,7 +99,7 @@ public class FunctionUtilsTest {
     @Test
     public void top_k_actors_acted_on_given_content_rating_in_given_year() {
         List<String> expected = Arrays.asList("Tamsin Egerton", "Alice Englert");
-        List<String> result = FunctionUtils.topKActorsForGivenContentRatingInAGivenYear
+        List<String> result = topKActorsForGivenContentRatingInAGivenYear
                 .apply(database.getMovieActors(), ContentRating.R, 2, 2015);
         assertEquals(expected, result);
     }
@@ -109,8 +107,16 @@ public class FunctionUtilsTest {
     @Test
     public void top_k_lengthy_movie_from_a_given_year() {
         List<String> expected = Arrays.asList("The Legend of Suriyothai", "Pearl Harbor");
-        List<String> result = FunctionUtils.topKLengthyMovieInAGivenYear
+        List<String> result = topKLengthyMovieInAGivenYear
                 .apply(database.getMovies(), 2, 2001);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void top_k_director_based_on_awards() {
+        List<String> expected = Arrays.asList("Martin Scorsese", "Ang Lee");
+        List<String> result = topKDirectorBasedOnAwards
+                .apply(database.getMovieAwards(), 2);
         assertEquals(expected, result);
     }
 }
