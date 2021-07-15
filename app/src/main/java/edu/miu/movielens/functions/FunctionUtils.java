@@ -1,9 +1,6 @@
 package edu.miu.movielens.functions;
 
-import edu.miu.movielens.model.Genre;
-import edu.miu.movielens.model.Movie;
-import edu.miu.movielens.model.MovieActor;
-import edu.miu.movielens.model.MovieGenre;
+import edu.miu.movielens.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -73,6 +70,22 @@ public interface FunctionUtils {
                     .stream()
                     .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
                     .map(Map.Entry::getKey)
+                    .limit(k)
+                    .collect(Collectors.toList());
+
+    // Query 7: in a given year how many movies were released by given content rating
+    TriFunction<Set<Movie>, Integer, ContentRating, Long> movieCountContentRatingInAGivenYear =
+            (movies, year, contentRating) -> movies.stream()
+                    .filter(m -> m.releaseYear().getYear() == year)
+                    .filter(m -> m.rating().equals(contentRating))
+                    .count();
+
+    // Query 8: top k actors acted on given content rating in given year
+    QuadFunction<List<MovieActor>, ContentRating, Integer, Integer, List<String>> topKActorsForGivenContentRatingInAGivenYear =
+            (movieActors, contentRating, k, year) -> movieActors.stream()
+                    .filter(ma -> ma.movie().releaseYear().getYear() == year)
+                    .filter(ma -> ma.movie().rating().equals(contentRating))
+                    .map(ma -> ma.actor().name())
                     .limit(k)
                     .collect(Collectors.toList());
 

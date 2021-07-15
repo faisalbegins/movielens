@@ -1,6 +1,5 @@
 package edu.miu;
 
-import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.utils.PseudoDatabase;
 
 public class Application {
@@ -8,8 +7,6 @@ public class Application {
     private static final PseudoDatabase database = PseudoDatabase.getInstance();
 
     public static void main(String[] args) {
-        FunctionUtils.topKActorAppearedInLeadingRoleInAGivenYear
-                .apply(database.getMovieActors(), 5, 2016)
-                .forEach(System.out::println);
+        // TODO: Need to implement app
     }
 }
