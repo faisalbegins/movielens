@@ -89,6 +89,15 @@ public interface FunctionUtils {
                     .limit(k)
                     .collect(Collectors.toList());
 
+    // Query 9: top k lengthy movie from a given year
+    TriFunction<Set<Movie>, Integer, Integer, List<String>> topKLengthyMovieInAGivenYear =
+            (movies, k, year) -> movies.stream()
+                    .filter(movie -> movie.releaseYear().getYear() == year)
+                    .sorted((m1, m2) -> Integer.compare(m2.duration(), m1.duration()))
+                    .limit(k)
+                    .map(Movie::name)
+                    .collect(Collectors.toList());
+
     Function<List<MovieGenre>, List<String>> toMovieNames =
             (movieGenres) -> movieGenres.stream()
                     .map(g -> g.movie().name())

@@ -105,4 +105,12 @@ public class FunctionUtilsTest {
                 .apply(database.getMovieActors(), ContentRating.R, 2, 2015);
         assertEquals(expected, result);
     }
+
+    @Test
+    public void top_k_lengthy_movie_from_a_given_year() {
+        List<String> expected = Arrays.asList("The Legend of Suriyothai", "Pearl Harbor");
+        List<String> result = FunctionUtils.topKLengthyMovieInAGivenYear
+                .apply(database.getMovies(), 2, 2001);
+        assertEquals(expected, result);
+    }
 }
