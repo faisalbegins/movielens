@@ -2,6 +2,8 @@ package edu.miu.movielens;
 
 import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.movielens.model.Genre;
+import edu.miu.utils.PseudoDatabase;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
@@ -12,17 +14,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FunctionUtilsTest {
+    private PseudoDatabase database;
+
+    @Before
+    public void init() {
+        this.database = PseudoDatabase.getInstance();
+    }
+
     @Test
     public void top_k_popular_movies_in_a_given_year() {
         List<String> expected = Arrays.asList("Kickboxer: Vengeance", "A Beginner's Guide to Snuff");
-        List<String> movies = topKMoviesInGivenYear.apply(2, 2016);
+        List<String> movies = topKMoviesInGivenYear.apply(database.getMovies(), 2, 2016);
         assertEquals(expected, movies);
     }
 
     @Test
     public void most_successful_director_in_a_specific_year() {
         String expected = "Mike Mayhall";
-        Optional<String> result = mostSuccessfulDirectorInGivenYear.apply(2015);
+        Optional<String> result = mostSuccessfulDirectorInGivenYear.apply(database.getMovies(), 2015);
         assertTrue(result.isPresent());
         assertEquals(expected, result.get());
     }
@@ -56,7 +65,7 @@ public class FunctionUtilsTest {
         expected.put(Genre.valueOf("CRIME"), Arrays.asList("The Shawshank Redemption"));
         expected.put(Genre.valueOf("DRAMA"), Arrays.asList("The Shawshank Redemption"));
 
-        Map<Genre, List<String>> result = FunctionUtils.topKMoviesByGenreInGivenYear.apply(1, 2016);
+        Map<Genre, List<String>> result = FunctionUtils.topKMoviesByGenreInGivenYear.apply(database.getMovieGenres(), 1, 2016);
 
         assertEquals(expected.keySet(), result.keySet());
     }
@@ -64,7 +73,14 @@ public class FunctionUtilsTest {
     @Test
     public void top_k_genre_by_a_given_year() {
         List<String> expected = Arrays.asList("DRAMA", "COMEDY");
-        List<String> result = FunctionUtils.topKGenreByYear.apply(2, 2016);
+        List<String> result = FunctionUtils.topKGenreByYear.apply(database.getMovieGenres(), 2, 2016);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void top_k_actor_appeared_in_leading_role_in_a_given_year() {
+        List<String> expected = Arrays.asList("Scarlett Johansson", "Morgan Freeman");
+        List<String> result = FunctionUtils.topKActorAppearedInLeadingRoleInAGivenYear.apply(database.getMovieActors(), 2, 2016);
         assertEquals(expected, result);
     }
 }
