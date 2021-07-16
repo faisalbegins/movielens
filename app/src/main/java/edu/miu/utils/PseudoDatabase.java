@@ -1,12 +1,7 @@
 package edu.miu.utils;
 
-import com.google.common.io.CharStreams;
 import edu.miu.movielens.model.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -30,7 +25,7 @@ public class PseudoDatabase {
     }
 
     static {
-        Optional<String> optional = readFileContent();
+        Optional<String> optional = FileContentReader.readFileContent(FILE_NAME);
         String content = optional.orElseThrow(RuntimeException::new);
         rows = content.split("\n");
     }
@@ -173,18 +168,6 @@ public class PseudoDatabase {
 
     private static class Holder {
         private static final PseudoDatabase INSTANCE = new PseudoDatabase();
-    }
-
-    private static Optional<String> readFileContent() {
-        InputStream stream = PseudoDatabase.class.getResourceAsStream("/" + FILE_NAME);
-        if(stream == null) return Optional.empty();
-        String text = null;
-        try (Reader reader = new InputStreamReader(stream)) {
-            text = CharStreams.toString(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Optional.ofNullable(text);
     }
 
     public Set<Movie> getMovies() {
