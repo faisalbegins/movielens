@@ -8,18 +8,18 @@ import java.util.stream.Stream;
 public class StreamConfig {
     private static final String FILE_NAME = "stream_config";
 
-    private static boolean isParallel = false;
+    private static long threshold = 10000;
 
     static {
         Optional<String> option = FileContentReader.readFileContent(FILE_NAME);
-        option.ifPresent(s -> isParallel = Boolean.parseBoolean(s));
+        option.ifPresent(s -> threshold = Long.parseLong(s));
     }
 
     static public <T> Stream<T> streamOf(List<T> list) {
-        return isParallel ? list.parallelStream() : list.stream();
+        return list.size() > threshold ? list.parallelStream() : list.stream();
     }
 
     static public <T> Stream<T> streamOf(Set<T> set) {
-        return isParallel ? set.parallelStream() : set.stream();
+        return set.size() > threshold ? set.parallelStream() : set.stream();
     }
 }
