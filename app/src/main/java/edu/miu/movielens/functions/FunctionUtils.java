@@ -130,4 +130,17 @@ public interface FunctionUtils {
                     .limit(k)
                     .map(Movie::name)
                     .collect(Collectors.toList());
+
+    // Query 13: movie count by language for a given year
+    BiFunction<Set<Movie>, Integer, List<Tuple<String, Long>>> movieCountByLanguageInAGivenYear =
+            (movies, year) -> streamOf(movies)
+                    .map(Movie::language)
+                    .map(Enum::name)
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .map(entity -> new Tuple<>(entity.getKey(), entity.getValue()))
+                    .collect(Collectors.toList());
+
 }

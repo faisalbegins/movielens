@@ -3,6 +3,7 @@ package edu.miu.movielens;
 import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.movielens.model.ContentRating;
 import edu.miu.movielens.model.Genre;
+import edu.miu.movielens.model.Tuple;
 import edu.miu.utils.PseudoDatabase;
 import org.junit.Before;
 import org.junit.Test;
@@ -135,5 +136,13 @@ public class FunctionUtilsTest {
         List<String> result = firstNMovieTitleContainGivenWord
                 .apply(database.getMovies(), "blood", 2);
         assertEquals(expected.size(), result.size());
+    }
+
+    @Test
+    public void movie_count_by_language_for_a_given_year() {
+        int size = 47;
+        List<Tuple<String, Long>> result = movieCountByLanguageInAGivenYear
+                .apply(database.getMovies(), 2016);
+        assertEquals(size, result.size());
     }
 }
