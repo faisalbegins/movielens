@@ -1,0 +1,15 @@
+1: Top K popular movies in a given year [Integrated with UI]
+2: most successful director in a specific year [Integrated with UI]
+3: top k movies from each genre in a given year
+4: top k genre by a given year
+5: top k movie genres by imdb score
+6: top k actor appeared in leading role in a given year
+7: in a given year how many movies were released by given content rating
+8: top k movie count by country for a given year
+9: top k actors acted on given content rating in given year
+10: top k lengthy movie from a given year
+11: top k director based on awards
+12: top k flop leading actors in a given year
+13: first n movies title that has a specific words
+14: movie count by language for a given year
+15: top k movie count by director for a given year [Integrated with UI]
