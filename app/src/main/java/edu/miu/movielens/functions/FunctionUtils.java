@@ -143,4 +143,16 @@ public interface FunctionUtils {
                     .map(entity -> new Tuple<>(entity.getKey(), entity.getValue()))
                     .collect(Collectors.toList());
 
+    // Query 14: top k movie count by director for a given year
+    TriFunction<Set<Movie>, Integer, Integer, List<Tuple<String, Long>>> topKMovieCountByDirectorInAGivenYear =
+            (movies, k, year) -> streamOf(movies)
+                    .filter(movie -> movie.releaseYear().getYear() == year)
+                    .map(movie -> movie.director().name())
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .map(entity -> new Tuple<>(entity.getKey(), entity.getValue()))
+                    .limit(k)
+                    .collect(Collectors.toList());
 }

@@ -145,4 +145,15 @@ public class FunctionUtilsTest {
                 .apply(database.getMovies(), 2016);
         assertEquals(size, result.size());
     }
+
+    @Test
+    public void top_k_movie_count_by_director_for_a_given_year() {
+        List<Tuple<String, Long>> expected = Arrays.asList(
+                new Tuple<>("Steven Spielberg", 2L),
+                new Tuple<>("Dennis Dugan", 2L)
+        );
+        List<Tuple<String, Long>> result = topKMovieCountByDirectorInAGivenYear
+                .apply(database.getMovies(), 2, 2011);
+        assertEquals(expected, result);
+    }
 }

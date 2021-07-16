@@ -1,9 +1,6 @@
 package edu.miu;
 
-import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.utils.PseudoDatabase;
-
-import static edu.miu.movielens.functions.FunctionUtils.*;
 
 
 public class Application {
