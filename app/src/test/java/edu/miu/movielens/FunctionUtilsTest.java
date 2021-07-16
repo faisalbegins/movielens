@@ -115,6 +115,18 @@ public class FunctionUtilsTest {
     }
 
     @Test
+    public void top_k_movie_count_by_country_for_a_given_year() {
+        List<Tuple<String, Long>> expected = Arrays.asList(
+                new Tuple<>("USA", 72L),
+                new Tuple<>("UK", 11L),
+                new Tuple<>("CANADA", 3L)
+        );
+        List<Tuple<String, Long>> result = topKMovieCountByCountryInAGivenYear
+                .apply(database.getMovies(), 3, 2016);
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void top_k_director_based_on_awards() {
         List<String> expected = Arrays.asList("Martin Scorsese", "Ang Lee");
         List<String> result = topKDirectorBasedOnAwards

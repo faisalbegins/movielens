@@ -83,7 +83,20 @@ public interface FunctionUtils {
                     .filter(m -> m.rating().equals(contentRating))
                     .count();
 
-    // Query 8: top k actors acted on given content rating in given year
+    // Query 8: top k movie count by country for a given year
+    TriFunction<Set<Movie>, Integer, Integer, List<Tuple<String, Long>>> topKMovieCountByCountryInAGivenYear =
+            (movies, k, year) -> streamOf(movies)
+                    .filter(movie -> movie.releaseYear().getYear() == year)
+                    .map(movie -> movie.country().name())
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+                    .map(entity -> new Tuple<>(entity.getKey(), entity.getValue()))
+                    .limit(k)
+                    .collect(Collectors.toList());
+
+    // Query 9: top k actors acted on given content rating in given year
     QuadFunction<List<MovieActor>, ContentRating, Integer, Integer, List<String>> topKActorsForGivenContentRatingInAGivenYear =
             (movieActors, contentRating, k, year) -> streamOf(movieActors)
                     .filter(ma -> ma.movie().releaseYear().getYear() == year)
@@ -92,7 +105,7 @@ public interface FunctionUtils {
                     .limit(k)
                     .collect(Collectors.toList());
 
-    // Query 9: top k lengthy movie from a given year
+    // Query 10: top k lengthy movie from a given year
     TriFunction<Set<Movie>, Integer, Integer, List<String>> topKLengthyMovieInAGivenYear =
             (movies, k, year) -> streamOf(movies)
                     .filter(movie -> movie.releaseYear().getYear() == year)
@@ -101,7 +114,7 @@ public interface FunctionUtils {
                     .map(Movie::name)
                     .collect(Collectors.toList());
 
-    // Query 10: top k director based on awards
+    // Query 11: top k director based on awards
     BiFunction<List<MovieAward>, Integer, List<String>> topKDirectorBasedOnAwards =
             (awards, k) -> streamOf(awards)
                     .map(award -> award.movie().director().name())
@@ -113,7 +126,7 @@ public interface FunctionUtils {
                     .limit(k)
                     .collect(Collectors.toList());
 
-    // Query 11: top k flop leading actors in a given year
+    // Query 12: top k flop leading actors in a given year
     TriFunction<List<MovieActor>, Integer, Integer, List<String>> topKFlopLeadingActorsInAGivenYear =
             (movieActors, k, year) -> streamOf(movieActors)
                     .filter(MovieActor::leadRole)
@@ -123,7 +136,7 @@ public interface FunctionUtils {
                     .map(movieActor -> movieActor.actor().name())
                     .collect(Collectors.toList());
 
-    // Query 12: first n movies title that has a specific words
+    // Query 13: first n movies title that has a specific words
     TriFunction<Set<Movie>, String, Integer, List<String>> firstNMovieTitleContainGivenWord =
             (movies, word, k) -> streamOf(movies)
                     .filter(movie -> movie.name().toUpperCase().contains(word.toUpperCase()))
@@ -131,7 +144,7 @@ public interface FunctionUtils {
                     .map(Movie::name)
                     .collect(Collectors.toList());
 
-    // Query 13: movie count by language for a given year
+    // Query 14: movie count by language for a given year
     BiFunction<Set<Movie>, Integer, List<Tuple<String, Long>>> movieCountByLanguageInAGivenYear =
             (movies, year) -> streamOf(movies)
                     .map(Movie::language)
@@ -143,7 +156,7 @@ public interface FunctionUtils {
                     .map(entity -> new Tuple<>(entity.getKey(), entity.getValue()))
                     .collect(Collectors.toList());
 
-    // Query 14: top k movie count by director for a given year
+    // Query 15: top k movie count by director for a given year
     TriFunction<Set<Movie>, Integer, Integer, List<Tuple<String, Long>>> topKMovieCountByDirectorInAGivenYear =
             (movies, k, year) -> streamOf(movies)
                     .filter(movie -> movie.releaseYear().getYear() == year)
