@@ -1,5 +1,6 @@
 package edu.miu.movielens;
 
+import edu.miu.movielens.functions.FunctionUtils;
 import edu.miu.movielens.model.ContentRating;
 import edu.miu.movielens.model.Genre;
 import edu.miu.utils.PseudoDatabase;
@@ -118,5 +119,21 @@ public class FunctionUtilsTest {
         List<String> result = topKDirectorBasedOnAwards
                 .apply(database.getMovieAwards(), 2);
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void top_k_flop_leading_actors_in_a_given_year() {
+        List<String> expected = Arrays.asList("Melissa Sagemiller", "Mariah Carey");
+        List<String> result = topKFlopLeadingActorsInAGivenYear
+                .apply(database.getMovieActors(), 10, 2001);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void first_n_movies_title_that_has_a_specific_words() {
+        List<String> expected = Arrays.asList("Blood Work", "There Will Be Blood");
+        List<String> result = firstNMovieTitleContainGivenWord
+                .apply(database.getMovies(), "blood", 2);
+        assertEquals(expected.size(), result.size());
     }
 }

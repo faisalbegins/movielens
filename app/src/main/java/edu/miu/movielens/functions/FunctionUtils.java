@@ -113,4 +113,21 @@ public interface FunctionUtils {
                     .limit(k)
                     .collect(Collectors.toList());
 
+    // Query 11: top k flop leading actors in a given year
+    TriFunction<List<MovieActor>, Integer, Integer, List<String>> topKFlopLeadingActorsInAGivenYear =
+            (movieActors, k, year) -> streamOf(movieActors)
+                    .filter(MovieActor::leadRole)
+                    .filter(movieActor -> movieActor.movie().releaseYear().getYear() == year)
+                    .filter(movieActor -> movieActor.movie().imdbScore() < 4)
+                    .limit(k)
+                    .map(movieActor -> movieActor.actor().name())
+                    .collect(Collectors.toList());
+
+    // Query 12: first n movies title that has a specific words
+    TriFunction<Set<Movie>, String, Integer, List<String>> firstNMovieTitleContainGivenWord =
+            (movies, word, k) -> streamOf(movies)
+                    .filter(movie -> movie.name().toUpperCase().contains(word.toUpperCase()))
+                    .limit(k)
+                    .map(Movie::name)
+                    .collect(Collectors.toList());
 }
